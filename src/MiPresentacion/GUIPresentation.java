@@ -3,88 +3,99 @@ package MiPresentacion;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.*;
 
-
 public class GUIPresentation extends JFrame {
-    //attributes
-    private JButton miFoto, miHobby, misExpectativas;
+
+    private JButton myPhoto, myHobby, myExpectations;
     private Title title;
-    private JPanel contenedordeBotones, contenedordeImagenes;
+    private JPanel containerButtons, containerImage;
     private Listener listener;
     private JLabel imageLabel;
-    private JTextArea expectativesText;
+    private JTextArea expectatives;
 
-
-    //todos
-    public GUIPresentation() {
+    public GUIPresentation()
+    {
         initGUI();
-        this.setTitle("MyPresentation");
-        this.setSize(600, 400);
-        this.setVisible(true);
+        this.setSize(600,400);
         this.setLocationRelativeTo(null);
+        this.setTitle("My presentation");
+        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     private void initGUI() {
-        title = new Title("Una presentacion sobre esta persona maravillosa", Color.MAGENTA);
+        title = new Title("Una presentacion sobre mi", Color.PINK);
         this.add(title, BorderLayout.NORTH);
-        contenedordeBotones = new JPanel();
-        contenedordeImagenes = new JPanel();
-        miFoto = new JButton("Esta soy yo");
-        miHobby = new JButton("Mis hobbies son");
-        misExpectativas = new JButton("Mis expectativas:");
+        myPhoto = new JButton("Esta soy yo");
+        myHobby = new JButton("Mis hobbys");
+        myExpectations = new JButton("Mis expectativas");
+        containerButtons = new JPanel();
+        containerImage = new JPanel();
         listener = new Listener();
         imageLabel = new JLabel();
-        expectativesText = new JTextArea( 10,12);
+        expectatives = new JTextArea(10,12);
 
-        contenedordeImagenes.setBorder(BorderFactory.createTitledBorder(null,"About me", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, new Font(Font.MONOSPACED,Font.PLAIN, 16), Color.BLACK));
-        contenedordeImagenes.add(imageLabel);
-        contenedordeBotones.add(miFoto);
-        contenedordeBotones.add(miHobby);
-        contenedordeBotones.add(misExpectativas);
+        containerImage.setBorder(BorderFactory.createTitledBorder(null, "About Me",
+                TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION,
+                new Font (Font.MONOSPACED, Font.PLAIN, 20), Color.BLACK));
 
-        miFoto.addActionListener(listener);
-        miFoto.addMouseListener(listener);
-        miFoto.addKeyListener(listener);
-        miHobby.addActionListener(listener);
-        miHobby.addKeyListener(listener);
-        miHobby.addMouseListener(listener);
-        misExpectativas.addActionListener(listener);
-        misExpectativas.addKeyListener(listener);
-        misExpectativas.addMouseListener(listener);
+        containerImage.add(imageLabel);
 
+        containerButtons.add(myPhoto);
+        containerButtons.add(myHobby);
+        containerButtons.add(myExpectations);
 
+        myPhoto.addActionListener(listener);
+        myPhoto.addMouseListener(listener);
+        myPhoto.addKeyListener(listener);
+        myHobby.addActionListener(listener);
+        myHobby.addMouseListener(listener);
+        myHobby.addKeyListener(listener);
+        myExpectations.addActionListener(listener);
+        myExpectations.addMouseListener(listener);
+        myExpectations.addKeyListener(listener);
 
-
-        this.add(contenedordeBotones, BorderLayout.SOUTH);
-        this.add(contenedordeImagenes, BorderLayout.NORTH);
+        this.add(containerButtons, BorderLayout.SOUTH);
+        this.add(containerImage, BorderLayout.CENTER);
 
     }
 
-    public static void main(String[] args) {
+    public static void main (String[] arg){
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                GUIPresentation myGUI = new GUIPresentation();
+
+
+                GUIPresentation myPresen = new GUIPresentation();
             }
+
         });
+
+
     }
 
     private class Listener implements ActionListener, KeyListener, MouseListener {
+
         private ImageIcon image;
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            imageLabel.setIcon(null);
-            contenedordeImagenes.remove(expectativesText);
-            if(e.getSource() == miFoto){
+
+
+            containerImage.remove(expectatives);
+
+
+            if(e.getSource() == myPhoto){
+                imageLabel.setIcon(null);
+                //JOptionPane.showMessageDialog(null, "Press button");
                 this.image = new ImageIcon(getClass().getResource("/Recursos/imagenPresentacion.jpg"));
                 imageLabel.setIcon(image);
+
             }
-            revalidate();
-            repaint();
+
         }
 
         @Override
@@ -97,13 +108,16 @@ public class GUIPresentation extends JFrame {
 
             imageLabel.setIcon(null);
 
-            if(e.getKeyCode()==KeyEvent.VK_M){
 
-                expectativesText.setText("Yo espero tener buena plata vos sabes mi papá \n" + "Me puedes contactar a través de sarahy.caicedo@correounivalle.edu.co");
-                expectativesText.setBackground(null);
-                expectativesText.setForeground(Color.BLACK);
-                contenedordeImagenes.add(expectativesText);
+            if(e.getKeyCode()==KeyEvent.VK_M) {
+
+                expectatives.setText("Quiero tener mucha plata vos sabes, malo emitir vocablo\n" + "My contact is sarahy.caicedo@correounivalle.edu.co");
+                expectatives.setFont(new Font(Font.DIALOG, Font.ITALIC, 15));
+                expectatives.setBackground(null);
+                expectatives.setForeground(Color.BLACK);
+                containerImage.add(expectatives);
             }
+
             revalidate();
             repaint();
 
@@ -117,11 +131,11 @@ public class GUIPresentation extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
 
-                if(e.getClickCount() == 2 && e.getSource() == miHobby){
-                    imageLabel.setIcon(null);
-                    contenedordeImagenes.remove(expectativesText);
-                    this.image = new ImageIcon(getClass().getResource("/Recursos/ver-anime-online-1.jpg"));
-                    GUIPresentation.this.imageLabel.setIcon(this.image);
+            if(e.getClickCount()==2 && e.getSource() == myHobby){
+                imageLabel.setIcon(null);
+                containerImage.remove(expectatives);
+                this.image = new ImageIcon(getClass().getResource("/Recursos/ver-anime-online-1.jpg"));
+                GUIPresentation.this.imageLabel.setIcon(this.image);
             }
             revalidate();
             repaint();
